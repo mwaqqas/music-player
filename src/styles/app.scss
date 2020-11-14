@@ -3,3 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+h1,
+h2,
+h3 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(54, 54, 54);
+  padding: 1rem 0rem 1rem 0rem;
+}
+
+@import './song';
+@import './player';
