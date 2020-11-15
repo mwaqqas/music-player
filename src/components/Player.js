@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
@@ -6,6 +6,7 @@ import {
   faAngleLeft,
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { playAudio } from '../utilities/playAudio';
 
 const Player = ({
   isPlaying,
@@ -13,16 +14,11 @@ const Player = ({
   currentSong,
   nextSong,
   prevSong,
+  buttonStatus,
+  audioRef,
+  songState,
+  setSongState,
 }) => {
-  // Refs
-  const audioRef = useRef(null);
-
-  // song state
-  const [songState, setSongState] = useState({
-    currentTime: 0,
-    duration: 0,
-  });
-
   // helpers
   const getNormalTime = (time) => {
     if (time) {
@@ -44,65 +40,69 @@ const Player = ({
     setIsPlaying((isPlaying) => !isPlaying);
   };
 
-  const handleSongTimer = (event) => {
-    setSongState({
-      ...songState,
-      currentTime: event.target.currentTime,
-      duration: event.target.duration,
-    });
-  };
-
   const handleSeekBarDrag = (event) => {
     audioRef.current.currentTime = event.target.value;
-
     setSongState({ ...songState, currentTime: event.target.value });
   };
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current.play();
+      playAudio(isPlaying, audioRef);
     }
-  }, [currentSong, isPlaying]);
+  }, [currentSong, isPlaying, audioRef]);
+
+  // styles
+  const trackAnimation = {
+    transform: `translateX(${songState.seekbarPercentage}%)`,
+  };
 
   return (
     <div className="player">
       <div className="time-control">
         <p>{getNormalTime(songState.currentTime)}</p>
-        <input
-          type="range"
-          min={0}
-          max={songState.duration}
-          value={songState.currentTime}
-          onChange={handleSeekBarDrag}
-        />
+        <div
+          style={{
+            background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]} )`,
+          }}
+          className="track"
+        >
+          <input
+            type="range"
+            min={0}
+            max={songState.duration}
+            value={songState.currentTime}
+            onChange={handleSeekBarDrag}
+          />
+          <div style={trackAnimation} className="animate-track"></div>
+        </div>
         <p>{getNormalTime(songState.duration)}</p>
       </div>
       <div className="play-control">
-        <FontAwesomeIcon
-          className="skip-back"
-          size="2x"
-          icon={faAngleLeft}
-          onClick={prevSong}
-        />
-        <FontAwesomeIcon
-          className="play"
-          size="2x"
-          icon={isPlaying ? faPause : faPlay}
-          onClick={handlePlayPauseSong}
-        />
-        <FontAwesomeIcon
-          className="skip-forward"
-          size="2x"
-          icon={faAngleRight}
-          onClick={nextSong}
-        />
+        <button disabled={!buttonStatus.previous}>
+          <FontAwesomeIcon
+            className="skip-back"
+            size="4x"
+            icon={faAngleLeft}
+            onClick={prevSong}
+          />
+        </button>
+        <button>
+          <FontAwesomeIcon
+            className="play"
+            size="5x"
+            icon={isPlaying ? faPause : faPlay}
+            onClick={handlePlayPauseSong}
+          />
+        </button>
+        <button disabled={!buttonStatus.next}>
+          <FontAwesomeIcon
+            className="skip-forward"
+            size="4x"
+            icon={faAngleRight}
+            onClick={nextSong}
+          />
+        </button>
       </div>
-      <audio
-        ref={audioRef}
-        src={currentSong.audio}
-        onTimeUpdate={handleSongTimer}
-        onLoadedMetadata={handleSongTimer}
-      ></audio>
     </div>
   );
 };

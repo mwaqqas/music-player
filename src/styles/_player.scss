@@ -4,6 +4,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  button {
+    border: 0px;
+    background: transparent;
+
+    &:disabled {
+      color: grey;
+    }
+  }
 }
 
 .time-control {
@@ -14,8 +23,9 @@
 
   input {
     width: 100%;
-    padding: 1rem 0rem;
-    margin: 0rem 2rem;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
   }
 
   p {
@@ -25,12 +35,47 @@
 
 .play-control {
   width: 30%;
-  // padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   svg {
     cursor: pointer;
+    color: $primary-text-color;
+
+    &:hover {
+      color: $primary-light-color;
+    }
   }
+}
+
+// seekbar customization
+input[type='range']:focus {
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+}
+
+.track {
+  background: lightblue;
+  width: 100%;
+  height: 1rem;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.animate-track {
+  background: rgb(204, 204, 204);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(0%);
+  pointer-events: none;
 }
