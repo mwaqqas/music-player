@@ -88,7 +88,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${isLibOpen ? 'library-active' : ''}`}>
       <Nav isLibOpen={isLibOpen} setIsLibOpen={setIsLibOpen} />
       <Song currentSong={currentSong} />
       <Player
@@ -117,6 +117,7 @@ function App() {
         src={currentSong.audio}
         onTimeUpdate={handleSongTimer}
         onLoadedMetadata={handleSongTimer}
+        onEnded={() => handleChangeSong('next')}
       ></audio>
     </div>
   );

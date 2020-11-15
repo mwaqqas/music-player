@@ -22,3 +22,11 @@
     color: $primary-text-color;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .song-container {
+    img {
+      width: 50%;
+    }
+  }
+}

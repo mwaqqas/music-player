@@ -1,6 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMusic,
+  faBars,
+  faChevronLeft,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Nav = ({ isLibOpen, setIsLibOpen }) => {
   //handlers
@@ -13,8 +17,10 @@ const Nav = ({ isLibOpen, setIsLibOpen }) => {
       <nav>
         <h1>Waves</h1>
         <button onClick={handleLibClick}>
-          Library
-          <FontAwesomeIcon icon={faMusic} />
+          <FontAwesomeIcon
+            icon={isLibOpen ? faChevronLeft : faBars}
+            size="2x"
+          />
         </button>
       </nav>
     </div>
