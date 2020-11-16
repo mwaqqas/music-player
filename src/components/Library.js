@@ -1,6 +1,8 @@
 import React from 'react';
 
 import LibrarySong from './LibrarySong';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Library = ({
   songs,
@@ -8,6 +10,7 @@ const Library = ({
   setCurrentSong,
   setIsPlaying,
   isLibOpen,
+  setIsLibOpen,
 }) => {
   const renderSongItems = () => {
     return songs.map((song) => (
@@ -23,7 +26,12 @@ const Library = ({
 
   return (
     <div className={`library ${isLibOpen ? 'active-library' : ''}`}>
-      <h2>Library</h2>
+      <div className="heading-container">
+        <h2>Library</h2>
+        <button onClick={() => setIsLibOpen(false)}>
+          <FontAwesomeIcon icon={faTimes} size="2x" />
+        </button>
+      </div>
       <div className="library-songs">{renderSongItems()}</div>
     </div>
   );

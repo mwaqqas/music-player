@@ -10,7 +10,6 @@ nav {
     border-radius: 10%;
     cursor: pointer;
     border: none;
-    // border: 2px solid $primary-color;
     padding: 0.5rem;
     transition: all 0.3s ease;
     &:hover {
@@ -20,10 +19,10 @@ nav {
   }
 }
 
-@media screen and (max-width: 768px) {
-  nav {
-    button {
-      z-index: 6;
-    }
-  }
-}
+// @media screen and (max-width: 768px) {
+//   nav {
+//     button {
+//       z-index: 6;
+//     }
+//   }
+// }
